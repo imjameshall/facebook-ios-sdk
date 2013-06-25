@@ -537,4 +537,6 @@ typedef void (^FBRequestHandler)(FBRequestConnection *connection,
 + (FBRequestConnection *)startForUploadStagingResourceWithImage:(UIImage *)image
                                               completionHandler:(FBRequestHandler)handler;
 
+
++ (void)setVideoMode:(BOOL)videoMode;
 @end

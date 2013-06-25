@@ -34,8 +34,11 @@
 #import "FBErrorUtility+Internal.h"
 #import "FBSystemAccountStoreAdapter.h"
 
+BOOL  bGraphIsVideo = NO;
+
 // URL construction constants
 NSString *const kGraphURL = @"https://graph." FB_BASE_URL;
+NSString *const kGraphBaseURLVideo = @"https://graph-video." FB_BASE_URL @"/";
 NSString *const kGraphBaseURL = @"https://graph." FB_BASE_URL @"/";
 NSString *const kRestBaseURL = @"https://api." FB_BASE_URL @"/method/";
 NSString *const kBatchKey = @"batch";
@@ -769,7 +772,10 @@ typedef enum FBRequestConnectionState {
         if (forBatch) {
             baseURL = request.graphPath;
         } else {
-            baseURL = [kGraphBaseURL stringByAppendingString:request.graphPath];
+            if (bGraphIsVideo)
+                baseURL = [kGraphBaseURLVideo stringByAppendingString:request.graphPath];
+            else
+                baseURL = [kGraphBaseURL stringByAppendingString:request.graphPath];
         }
     }
 
@@ -1606,5 +1612,7 @@ typedef enum FBRequestConnectionState {
 }
 
 #pragma mark -
-
++ (void)setVideoMode:(BOOL)videoMode {
+    bGraphIsVideo = videoMode;
+}
 @end
